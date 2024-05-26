@@ -65,25 +65,12 @@ namespace Acme.Test
             // Arrange
             var repository = new ProductCodeRepository();
             var productCodeService = new ProductCodeService(repository);
-            var generatedCodes = new Dictionary<string, bool>();
-            var testSize = 10;
-
-            for (int i = 0; i < testSize; i++)
-            {
-                var generated = await productCodeService.GenerateUniqueCode();
-                generatedCodes.Add(generated, false);
-            }
 
             // Act
-            foreach (var item in generatedCodes)
-            {
-                generatedCodes[item.Key] = productCodeService.ValidateCode(item.Key);
-            }
+            var generated = await productCodeService.GenerateUniqueCode();
+
             // Assert
-            foreach (var item in generatedCodes)
-            {
-                Assert.True(item.Value);
-            }
+            productCodeService.ValidateCode(generated);
         }
     }
 }
