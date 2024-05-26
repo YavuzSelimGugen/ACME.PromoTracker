@@ -6,16 +6,11 @@ namespace Acme.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ReceiptsController : ControllerBase
+    public class ReceiptsController(IOcrService ocrService) : ControllerBase
     {
-        private readonly IOcrService _ocrService;
+        private readonly IOcrService _ocrService = ocrService;
 
-        public ReceiptsController(IOcrService ocrService)
-        {
-            _ocrService = ocrService;
-        }
-
-        [HttpPost("upload")]
+        [HttpPost("parse")]
         public async Task<IActionResult> UploadReceipt([Required] IFormFile file)
         {
             if (file == null || file.Length == 0)
@@ -34,9 +29,9 @@ namespace Acme.API.Controllers
                 var fileBytes = memoryStream.ToArray();
 
                 // Call the service layer to process the receipt image
-                await _ocrService.ParseReceiptAsync(fileBytes);
+                var response = await _ocrService.ParseReceiptAsync(fileBytes);
 
-                return Ok(new { Message = "Receipt image uploaded successfully." });
+                return Ok(response);
             }
             catch (Exception ex)
             {
