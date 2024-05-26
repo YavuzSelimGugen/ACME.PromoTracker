@@ -5,6 +5,30 @@ namespace Acme.Test
 {
     public class ProductCodeServiceTest
     {
+
+        [Theory]
+        [InlineData(1000)]
+        public async Task GenerateUniqueCode_ForMultipleTimes_ReturnsUniqueCode(int testSize)
+        {
+            // Arrange
+            var repository = new ProductCodeRepository();
+            var productCodeService = new ProductCodeService(repository);
+            var generatedCodes = new HashSet<string>();
+
+            // Act
+            for (int i = 0; i < testSize; i++)
+            {
+                var generated = await productCodeService.GenerateUniqueCode();
+                generatedCodes.Add(generated);
+            }
+
+            // Assert
+            foreach (var item in generatedCodes)
+            {
+                Assert.True(productCodeService.ValidateCode(item));
+            }
+        }
+
         [Fact]
         public void ValidateCode_WithoutChecksumList_ReturnsFalse()
         {
