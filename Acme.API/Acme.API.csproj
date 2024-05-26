@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Acme.Core\Acme.Core.csproj" />
+    <ProjectReference Include="..\Acme.Repository\Acme.Repository.csproj" />
     <ProjectReference Include="..\Acme.Services\Acme.Services.csproj" />
   </ItemGroup>
 
