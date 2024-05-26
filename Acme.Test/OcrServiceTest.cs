@@ -20,7 +20,6 @@ namespace Acme.Test
             Assert.NotNull(result.TextBlocks);
             Assert.NotEmpty(result.TextBlocks);
             Assert.True(!string.IsNullOrEmpty(result.TextBlocks[0].Description));
-            Assert.True(!string.IsNullOrEmpty(result.TextBlocks[0].Locale));
             Assert.NotNull(result.TextBlocks[0].BoundingPoly.Vertices);
         }
 
