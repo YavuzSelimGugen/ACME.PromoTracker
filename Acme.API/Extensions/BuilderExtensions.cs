@@ -12,7 +12,8 @@ namespace Acme.API.Extensions
             services.AddTransient<IProductCodeService, ProductCodeService>();
             services.AddTransient<IProductCodeRepository, ProductCodeRepository>();
             services.AddTransient<IReceiptProcessor, ReceiptProcessor>();
-            
+            services.AddTransient<CipherService>();
+
             return services;
         }
     }

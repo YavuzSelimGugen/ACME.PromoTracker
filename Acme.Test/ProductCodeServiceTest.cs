@@ -11,8 +11,7 @@ namespace Acme.Test
         public async Task GenerateUniqueCode_ForMultipleTimes_ReturnsUniqueCode(int testSize)
         {
             // Arrange
-            var repository = new ProductCodeRepository();
-            var productCodeService = new ProductCodeService(repository);
+            var productCodeService = GetProductCodeService();
             var generatedCodes = new HashSet<string>();
 
             // Act
@@ -33,8 +32,7 @@ namespace Acme.Test
         public void ValidateCode_WithoutChecksumList_ReturnsFalse()
         {
             // Arrange
-            var repository = new ProductCodeRepository();
-            var productCodeService = new ProductCodeService(repository);
+            var productCodeService = GetProductCodeService();
 
             var nonGeneratedCodeList = new Dictionary<string, bool>
             {
@@ -63,14 +61,21 @@ namespace Acme.Test
         public async Task ValidateCode_ForGenerateUniqueCode_ReturnsTrue()
         {
             // Arrange
-            var repository = new ProductCodeRepository();
-            var productCodeService = new ProductCodeService(repository);
+            var productCodeService = GetProductCodeService();
 
             // Act
             var generated = await productCodeService.GenerateUniqueCode();
 
             // Assert
             productCodeService.ValidateCode(generated);
+        }
+
+
+        private ProductCodeService GetProductCodeService()
+        {
+            var repository = new ProductCodeRepository();
+            var cipherService = new CipherService();
+            return new ProductCodeService(repository, cipherService);
         }
     }
 }
