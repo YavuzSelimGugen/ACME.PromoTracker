@@ -12,12 +12,28 @@ namespace Acme.Services
         private static readonly int _checksumLength = 2;
         private static readonly int _mainCodeLength = _codeLength - _checksumLength;
         private static readonly Regex _codeRegex = new Regex($"^[{_characterSet}]+$");
+        private readonly IProductCodeRepository _productCodeRepository;
 
-        public string GenerateUniqueCode()
+        public ProductCodeService(IProductCodeRepository productCodeRepository)
         {
-            var mainCode = GenerateRandomCode(_mainCodeLength);
-            var checksum = GenerateChecksum(mainCode);
-            return mainCode + checksum;
+            _productCodeRepository = productCodeRepository;
+        }
+
+        public async Task<string> GenerateUniqueCode()
+        {
+            for (int attempt = 0; attempt < 100; attempt++) // Allow up to 100 attempts
+            {
+                var mainCode = GenerateRandomCode(_mainCodeLength);
+                var checksum = GenerateChecksum(mainCode);
+                var code = mainCode + checksum;
+
+                if (await _productCodeRepository.IsExist(code) == false)
+                {
+                    await _productCodeRepository.SaveProductCode(code);
+                    return code;
+                }
+            }
+            throw new Exception("Failed to generate a unique code after multiple attempts.");
         }
 
         public bool ValidateCode(string code)

@@ -1,3 +1,4 @@
+using Acme.Repository;
 using Acme.Services;
 
 namespace Acme.Test
@@ -8,7 +9,8 @@ namespace Acme.Test
         public void ValidateCode_WithoutChecksumList_ReturnsFalse()
         {
             // Arrange
-            var productCodeService = new ProductCodeService();
+            var repository = new ProductCodeRepository();
+            var productCodeService = new ProductCodeService(repository);
             
             var nonGeneratedCodeList = new Dictionary<string, bool>
             {
@@ -34,16 +36,17 @@ namespace Acme.Test
         }
 
         [Fact]
-        public void ValidateCode_ForGenerateUniqueCode_ReturnsTrue()
+        public async Task ValidateCode_ForGenerateUniqueCode_ReturnsTrue()
         {
             // Arrange
-            var productCodeService = new ProductCodeService();
+            var repository = new ProductCodeRepository();
+            var productCodeService = new ProductCodeService(repository);
             var generatedCodes = new Dictionary<string, bool>();
             var testSize = 10;
             
             for (int i = 0; i < testSize; i++)
             {
-                var generated = productCodeService.GenerateUniqueCode();
+                var generated = await productCodeService.GenerateUniqueCode();
                 generatedCodes.Add(generated, false);
             }
 
