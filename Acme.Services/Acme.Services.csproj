@@ -10,4 +10,18 @@
     <ProjectReference Include="..\Acme.Core\Acme.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Sample\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Sample\response.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
