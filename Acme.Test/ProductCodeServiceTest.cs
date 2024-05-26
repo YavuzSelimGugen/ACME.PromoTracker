@@ -35,7 +35,7 @@ namespace Acme.Test
             // Arrange
             var repository = new ProductCodeRepository();
             var productCodeService = new ProductCodeService(repository);
-            
+
             var nonGeneratedCodeList = new Dictionary<string, bool>
             {
                 {"xiHDTLGF", false},
@@ -67,7 +67,7 @@ namespace Acme.Test
             var productCodeService = new ProductCodeService(repository);
             var generatedCodes = new Dictionary<string, bool>();
             var testSize = 10;
-            
+
             for (int i = 0; i < testSize; i++)
             {
                 var generated = await productCodeService.GenerateUniqueCode();
