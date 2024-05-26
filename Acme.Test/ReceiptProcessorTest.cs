@@ -10,7 +10,7 @@ namespace Acme.Test
         public async Task ProcessReceipt_WithSampleResponse_ReturnsOrderedTextLines()
         {
             // Arrange
-            var ocrService = new OcrService();
+            var ocrService = new OcrTestService();
             var receiptProcessor = new ReceiptProcessor();
             var receipt = await ocrService.ParseReceiptAsync(Encoding.UTF8.GetBytes("test"));
 

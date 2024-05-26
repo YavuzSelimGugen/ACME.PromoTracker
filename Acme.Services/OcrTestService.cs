@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Acme.Services
 {
-    public class OcrService : IOcrService
+    public class OcrTestService : IOcrService
     {
         public async Task<Receipt> ParseReceiptAsync(byte[] fileBytes)
         {

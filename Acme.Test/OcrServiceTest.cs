@@ -10,7 +10,7 @@ namespace Acme.Test
         {
             // Arrange
             var fileBytes = Encoding.UTF8.GetBytes("test");
-            var ocrService = new OcrService();
+            var ocrService = new OcrTestService();
 
             // Act
             var result = await ocrService.ParseReceiptAsync(fileBytes);
@@ -29,7 +29,7 @@ namespace Acme.Test
         {
             // Arrange
             var fileBytes = Encoding.UTF8.GetBytes("test");
-            var ocrService = new OcrService();
+            var ocrService = new OcrTestService();
 
             // Act
             var result = await ocrService.ParseReceiptAsync(fileBytes);
